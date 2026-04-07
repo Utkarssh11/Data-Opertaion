@@ -9757,7 +9757,7 @@ public class SmartenController extends ObjectController implements Serializable 
     	}
     			
     	// Passing the same map with two keys: one for JavaScript and one for JSP table rendering
-    	//modelMap.put("colLabelsAliasMap", colLabelsMap);
+    	modelMap.put("colLabelsAliasMap", colLabelsMap);
     	modelMap.put("colLabelsMap", colLabelsMap);
     	
     	return new ModelAndView("smartview/smartenRankObject");

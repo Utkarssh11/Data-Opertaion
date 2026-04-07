@@ -9756,7 +9756,8 @@ public class SmartenController extends ObjectController implements Serializable 
     	colLabelsMap = graphInfo.getGraphProperties().getColLabelsMap();
     	}
     			
-    	// Passing the same map with two keys: one for JavaScript and one for JSP table rendering
+    	// Same map exposed under two keys: "colLabelsAliasMap" for the JavaScript alias bridge
+    	// in smartenRankSort.jsp, and "colLabelsMap" for JSTL table rendering in smartenRankObject.jsp.
     	modelMap.put("colLabelsAliasMap", colLabelsMap);
     	modelMap.put("colLabelsMap", colLabelsMap);
     	

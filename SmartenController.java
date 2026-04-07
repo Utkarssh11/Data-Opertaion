@@ -1517,7 +1517,30 @@ public class SmartenController extends ObjectController implements Serializable 
 		map.put("postaggregationMap", postaggregationMap);
 		map.put("dataMap", dataMap);
 		map.put("messureMap", messureMap);
+		
+		//For Main Data Operation Dialog: create display map to show column aliases in UI. Keeps original measure keys unchanged for backend processing
+		Map<String, String> colLabels = graphInfo.getGraphProperties().getColLabelsMap();
+		Map<String, String> messureDisplayMap = new LinkedHashMap<String, String>();
+		for (Map.Entry<String, String> entry : messureMap.entrySet()) {
+		    String k = entry.getKey();
+
+		    messureDisplayMap.put(k, (colLabels != null && colLabels.containsKey(k))
+		                             ? colLabels.get(k) : k);
+		}
+
+		map.put("messureDisplayMap", messureDisplayMap);
 		map.put("dimension", dimension);
+		
+		// Dimension Display Map (for UI only)
+		Map<String, String> dimensionDisplayMap = new LinkedHashMap<String, String>();
+		if (dimension != null) {
+		    for (Object dim : dimension) {
+		        String d = dim.toString();
+		        dimensionDisplayMap.put(d, (colLabels != null && colLabels.containsKey(d)) 
+		                                   ? colLabels.get(d) : d);
+		    }
+		}
+		map.put("dimensionDisplayMap", dimensionDisplayMap);
 		map.put("distinctCountMap", distinctCountMap);
 		map.put("distinctOprMap", graphInfo.getObjectCubeDefinition().getDistinctCountOperationMap());
 		map.put("selectedoperation", measureDataMap);
@@ -9727,6 +9750,16 @@ public class SmartenController extends ObjectController implements Serializable 
     	if(isFromSmarten())
     		modelMap.put("isFromSmarten", true);
     	
+    	// Fetch alias names for columns to display in the Top-Bottom (Rank) UI
+    	Map<String, String> colLabelsMap = new HashMap<String, String>();
+    	if (graphInfo != null && graphInfo.getGraphProperties() != null && graphInfo.getGraphProperties().getColLabelsMap() != null) {
+    	colLabelsMap = graphInfo.getGraphProperties().getColLabelsMap();
+    	}
+    			
+    	// Passing the same map with two keys: one for JavaScript and one for JSP table rendering
+    	//modelMap.put("colLabelsAliasMap", colLabelsMap);
+    	modelMap.put("colLabelsMap", colLabelsMap);
+    	
     	return new ModelAndView("smartview/smartenRankObject");
     }
     
@@ -10086,6 +10119,9 @@ public class SmartenController extends ObjectController implements Serializable 
 				session.setAttribute("activeSortList", sActiveSortList);
 			}*/
 			map.put("orderByInfo", sortList);
+			//new
+			Map<String, String> colLabels = graphInfo.getGraphProperties().getColLabelsMap();
+			map.put("colLabelsMap", colLabels);
 			map.put("dateFormat", strDateFormat);			
 			map.addAttribute("sortOption", iSortColumn +":0");
 			map.addAttribute("sortType", iSortColumn);
@@ -15794,7 +15830,27 @@ if(list != null ) {
 		map.put("postaggregationMap", postaggregationMap);
 		map.put("dataMap", dataMap);
 		map.put("messureMap", messureMap);
+		
+		
+		// Create display map for UI alias (backend original keys unchanged)
+		Map<String, String> colLabels = graphInfo.getGraphProperties().getColLabelsMap();
+		Map<String, String> messureDisplayMap = new LinkedHashMap<String, String>();
+		for (Map.Entry<String, String> entry : messureMap.entrySet()) {
+		    String k = entry.getKey();
+		    messureDisplayMap.put(k, (colLabels != null && colLabels.containsKey(k))
+		                             ? colLabels.get(k) : k);
+		}
+		map.put("messureDisplayMap", messureDisplayMap);
+		
 		map.put("dimension", dimension);
+		
+		/*
+		 * // Dimension display map Map<String, String> dimensionDisplayMap = new
+		 * LinkedHashMap<String, String>(); if (dimension != null) { for (Object dim :
+		 * dimension) { String d = dim.toString(); dimensionDisplayMap.put(d, (colLabels
+		 * != null && colLabels.containsKey(d)) ? colLabels.get(d) : d); } }
+		 * map.put("dimensionDisplayMap", dimensionDisplayMap);
+		 */
 		map.put("distinctCountMap", distinctCountMap);
 		map.put("distinctOprMap", graphInfo.getObjectCubeDefinition().getDistinctCountOperationMap());
 		map.put("selectedoperation", measureDataMap);
@@ -16089,6 +16145,14 @@ if(list != null ) {
 		map.put("allDimension", StringUtils.join(graphInfo.getDimensionTitleList(), ','));
 		map.put("mainOutlinerList", StringUtils.join(graphInfo.getMainOutlinerMeasureAndDimension(), ','));
 		
+		//New
+		Map<String, String> colLabelsMap = new HashMap<String, String>();
+		if (graphInfo != null && graphInfo.getGraphProperties() != null && graphInfo.getGraphProperties().getColLabelsMap() != null) {
+			colLabelsMap = graphInfo.getGraphProperties().getColLabelsMap();
+		}
+		map.put("colLabelsAliasMap", colLabelsMap);
+		map.put("colLabelsMap", colLabelsMap);		
+		
 		response.setStatus(HttpStatus.PARTIAL_CONTENT.value());
 		
 		if(isFromRank)
@@ -16140,6 +16204,14 @@ if(list != null ) {
 		map.put("allMeasures", allMeasureString);
 		map.put("allDimension", StringUtils.join(dimensionList, ','));
 		map.put("mainOutlinerList", StringUtils.join(graphInfo.getMainOutlinerMeasureAndDimension(), ','));
+		
+		// New
+		Map<String, String> colLabelsMap = new HashMap<String, String>();
+		if (graphInfo != null && graphInfo.getGraphProperties() != null && graphInfo.getGraphProperties().getColLabelsMap() != null) {
+			colLabelsMap = graphInfo.getGraphProperties().getColLabelsMap();
+		}
+		map.put("colLabelsAliasMap", colLabelsMap);
+		map.put("colLabelsMap", colLabelsMap);
 		
 		List<CubeRankDataLabel> rankList = graphInfo.getActiveTemplateProperties().getRankList();
 		int rank = 0;

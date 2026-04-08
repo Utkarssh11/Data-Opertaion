@@ -46,16 +46,16 @@
 												class="lbl"></span></td> --%>
 											<%-- <td><c:out value="${rankList.rankName}" /></td> --%>
 		  
-		                                       <!-- old -->
+		                                       <!-- Legacy raw column rendering retained in comments for reference. -->
 											<%-- <td id="rankColumnName${row.index }"><c:out
 													value="${rankList.columnName}" /></td> --%>
 													
-												<!-- Top-bottom after Add Rank Dimension >Apply -->	
+												<!-- Top/Bottom Quick Setting: show alias for rank dimension after apply. -->	
 												<td id="rankColumnName${row.index }">
                                                 ${not empty colLabelsMap[rankList.columnName] ? colLabelsMap[rankList.columnName] : rankList.columnName}
                                                 </td>
 													
-											<!-- old  for Measure-->		
+											<!-- Legacy raw measure rendering retained in comments for reference. -->		
 											<%-- <td><c:out value="${rankList.dataColumn}" /></td> --%>
 											
 											<td>

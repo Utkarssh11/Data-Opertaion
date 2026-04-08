@@ -62,7 +62,7 @@ $(document).ready(function() {
 
 function loadSortMeasure()
 {
-	//New ALIAS MAP
+	// Sort Quick Setting: map technical column names to user-friendly aliases for dropdown labels.
 	var aliasMap = {};
 	<c:forEach items="${colLabelsAliasMap}" var="entry">
 		aliasMap["${entry.key}"] = "${entry.value}";
@@ -87,7 +87,7 @@ function loadSortMeasure()
 	for (i = 0; i < array.length; i = i + 1) {
 		var originalName = array[i];
 		var displayName = (aliasMap[originalName] && aliasMap[originalName].trim() !== "") ? aliasMap[originalName] : originalName;
-		// sending originalName instead of i so the backend doesnt break
+		// Keep option value as original column name so sort requests remain backend-compatible.
 		selectHTML += "<option value='"+originalName+"'>" + displayName + "</option>";
 	}
 	selectHTML += "</select>";

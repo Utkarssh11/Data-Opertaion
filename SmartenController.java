@@ -1518,7 +1518,7 @@ public class SmartenController extends ObjectController implements Serializable 
 		map.put("dataMap", dataMap);
 		map.put("messureMap", messureMap);
 		
-		//For Main Data Operation Dialog: create display map to show column aliases in UI. Keeps original measure keys unchanged for backend processing
+		// Data Operation > Quick Setting: use display aliases in UI while preserving original measure keys for backend requests.
 		Map<String, String> colLabels = graphInfo.getGraphProperties().getColLabelsMap();
 		Map<String, String> messureDisplayMap = new LinkedHashMap<String, String>();
 		for (Map.Entry<String, String> entry : messureMap.entrySet()) {
@@ -1531,7 +1531,7 @@ public class SmartenController extends ObjectController implements Serializable 
 		map.put("messureDisplayMap", messureDisplayMap);
 		map.put("dimension", dimension);
 		
-		// Dimension Display Map (for UI only)
+		// Data Operation > Quick Setting: build a dimension display map using aliases for UI rendering only.
 		Map<String, String> dimensionDisplayMap = new LinkedHashMap<String, String>();
 		if (dimension != null) {
 		    for (Object dim : dimension) {

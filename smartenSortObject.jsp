@@ -38,12 +38,14 @@
 											<td>${sortInfo.sortName}</td> --%>
 											<%-- <td id="sortColumn${sIndex.index}">${sortInfo.name}</td> --%>
 											<td id="sortColumn${sIndex.index}">
+												<!-- Sort Quick Setting: show alias for the sort dimension in the applied list. -->
 
     ${not empty colLabelsMap[sortInfo.name] ? colLabelsMap[sortInfo.name] : sortInfo.name}
 
 </td>
 											<%-- <td>${sortInfo.targetName}</td> --%>
 											<td>
+												<!-- Sort Quick Setting: show alias for the selected measure in the applied list. -->
 												${not empty colLabelsMap[sortInfo.targetName] ? colLabelsMap[sortInfo.targetName] : sortInfo.targetName}
 											</td>
 											

@@ -251,7 +251,7 @@ function onChangeSelection1(rankvalue, id) {
 
 	function loadRankMeasure()
 	{
-		// New ALIAS Map
+		// Rank Quick Setting: map original column names to aliases for readable dropdown labels.
 		var aliasMap = {};
 		<c:forEach items="${colLabelsAliasMap}" var="entry">
 			aliasMap["${entry.key}"] = "${entry.value}";
@@ -281,7 +281,7 @@ function onChangeSelection1(rankvalue, id) {
 		selectHTML += "</select>";
 		newDiv.innerHTML = selectHTML;
 		
-		//change rank when change in dimension
+		// Top/Bottom Quick Setting: update rank limit and toggle state when dimension selection changes.
 		 $('#smartenRankDimension').change(function(){
 		 
 			var selectedIndex = document.getElementById("smartenRankDimension").selectedIndex;
@@ -309,7 +309,7 @@ function onChangeSelection1(rankvalue, id) {
 						var tooltip = '<div class="tooltipSlider"><div class="tooltip-inner">'+ rankValueSmarten+'</div><div class="tooltip-arrow"></div></div>';
 				$('#slider1 .ui-slider-handle').html(tooltip);
 		 });
-		//change rank when change in dimension
+		// End dimension-change handler for Top/Bottom Quick Setting.
 		
 		//For dimensions end
 		
@@ -343,13 +343,13 @@ function onChangeSelection1(rankvalue, id) {
 		$('#slider1 .ui-slider-handle').css('left', rankValueSmarten+"0%");
 		//for slider position
 		
-		//For top bottom toggle single dim
+		// Top/Bottom Quick Setting: initialize toggle state from the selected dimension's saved sort direction.
 		var isSort = '${allSortList[0]}';
 		if(isSort == 'true' || isSort == true) 
 			$('#toggle-two').bootstrapToggle('off');
 		else
 			$('#toggle-two').bootstrapToggle('on');
-		//For top bottom toggle
+		// End Top/Bottom toggle initialization.
 	}
 
 	$("#toggle-two").change(function(){
